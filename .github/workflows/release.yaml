@@ -1,0 +1,51 @@
+name: Build & Release BLE WebSocket API
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-
+
+      - name: Build APK
+        run: ./gradlew assembleDebug
+        working-directory: ./BleWebSocketAPI
+
+      - name: Zip project + APK
+        run: zip -r BleWebSocketAPI.zip \
+              build/outputs/apk/debug \
+              app \
+              src \
+              build.gradle \
+              settings.gradle \
+              local.properties
+        working-directory: ./BleWebSocketAPI
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          name: BleWebSocketAPI.zip
+          tag_name: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
