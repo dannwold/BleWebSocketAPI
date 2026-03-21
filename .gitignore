@@ -1,0 +1,7 @@
+.gradle/
+build/
+out/
+*.lock
+*.bin
+*.log
+*.zip
