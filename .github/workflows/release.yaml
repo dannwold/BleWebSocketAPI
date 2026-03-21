@@ -28,24 +28,30 @@ jobs:
           key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: gradle-
 
-      - name: Ensure AndroidX is enabled
+      - name: Ensure Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Create gradle.properties for AndroidX
         run: |
           echo "android.useAndroidX=true" >> gradle.properties
           echo "android.enableJetifier=true" >> gradle.properties
+
+      - name: Fix AndroidManifest.xml
+        run: |
+          sed -i '/package="/d' app/src/main/AndroidManifest.xml
+          sed -i '/<activity.*MainActivity/ s/>$/ android:exported="true">/' app/src/main/AndroidManifest.xml
 
       - name: Build APK
         run: ./gradlew assembleDebug
 
       - name: Zip project + APK
-        run: |
-          zip -r BleWebSocketAPI.zip \
-            app/build/outputs/apk/debug \
-            app \
-            src \
-            build.gradle \
-            settings.gradle \
-            gradle.properties \
-            local.properties
+        run: zip -r BleWebSocketAPI.zip \
+              app/build/outputs/apk/debug \
+              app \
+              src \
+              build.gradle \
+              settings.gradle \
+              gradle.properties
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v1
