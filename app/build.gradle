@@ -1,14 +1,14 @@
 plugins { id 'com.android.application' }
 android {
-    namespace "com.example.blewsapi"
-    namespace 'com.example.blewsapi'
-    compileSdk 34
+    namespace = "com.example.blewsapi"
+    compileSdk = 34
+    
     defaultConfig {
-        applicationId "com.example.blewsapi"
-        minSdk 24
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.example.blewsapi"
+        minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
     }
     buildTypes { release { minifyEnabled false } }
 }
