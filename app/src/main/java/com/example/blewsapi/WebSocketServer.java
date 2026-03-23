@@ -1,13 +1,14 @@
 package com.example.blewsapi;
 
-import org.java_websocket.server.WebSocketServer as WS;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import android.util.Log;
 import org.json.JSONObject;
 import java.net.InetSocketAddress;
 
-public class WebSocketServer extends WS {
+// Use the fully-qualified package path here to avoid the naming conflict
+public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
+    // ... rest of your code
 
     private BleService bleService;
 
