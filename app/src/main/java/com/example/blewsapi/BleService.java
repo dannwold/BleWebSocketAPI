@@ -1,5 +1,6 @@
 package com.example.blewsapi;
-
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.app.Service;
 import android.app.Notification;
 import android.app.NotificationChannel;
