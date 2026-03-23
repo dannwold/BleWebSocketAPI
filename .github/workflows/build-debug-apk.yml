@@ -1,4 +1,3 @@
-
 name: Build Debug APK
 
 on:
@@ -15,22 +14,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup JDK 17
+      # 2️⃣ Setup Java 17
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      # 3️⃣ Make gradlew executable
+      # 3️⃣ Make Gradle wrapper executable
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      # 4️⃣ Build Debug APK
+      # 4️⃣ Build Debug APK using the wrapper
       - name: Build Debug APK
         run: ./gradlew clean assembleDebug
 
-      # 5️⃣ Create a ZIP of the APK
+      # 5️⃣ Prepare ZIP artifact
       - name: Zip Debug APK
         run: |
           mkdir -p build_artifact
